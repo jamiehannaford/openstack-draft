@@ -19,7 +19,7 @@ Here is the top-level overview of how a user will interact with our SDK:
 3. User invokes a human-friendly service method:
   
   ```php
-  $service->listObjects('{containerName}', [
+  $objects = $service->listObjects('{containerName}', [
     'limit'  => 5,
     'prefix' => 'foo_',
   ]);
@@ -28,7 +28,11 @@ Here is the top-level overview of how a user will interact with our SDK:
 4. Service invokes REST method
 
   ```php
-  $request = $this->restApi->headAccount(['Container' => $containerName] + $opts);
+  public function listObjects($containerName, array $opts = [])
+  {
+    $request = $this->restApi->headAccount(['Container' => $containerName] + $opts);
+    // ...
+  }
   ```
   
   which returns a Request object. It is the role of the `RestApi` object to serialize a `HeadAccount` operation into a Request.
